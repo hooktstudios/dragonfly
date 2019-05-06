@@ -131,13 +131,13 @@ module Dragonfly
         job.url_attrs[:name] = filename
       end
       def url
-        @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+        @url ||= (args.first[%r<\A\w+://>] ? args.first : "http://#{args.first}")
       end
       def path
         @path ||= URI.parse(url).path
       end
       def filename
-        @filename ||= File.basename(path) if path[/[^\/]$/]
+        @filename ||= File.basename(path) if path[/[^\/]\z/]
       end
       def apply
         open(url) do |f|
